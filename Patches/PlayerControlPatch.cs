@@ -1694,7 +1694,7 @@ internal static class FixedUpdatePatch
         {
             AFKDetector.OnFixedUpdate(player);
 
-            if (isLobby && (ModUpdater.HasUpdate && ModUpdater.ForceUpdate || ModUpdater.IsBroken || !Main.AllowPublicRoom) && AmongUsClient.Instance.IsGamePublic)
+            if (isLobby && !Main.AllowPublicRoom && AmongUsClient.Instance.IsGamePublic)
                 AmongUsClient.Instance.ChangeGamePublic(false);
 
             // Kick low-level people

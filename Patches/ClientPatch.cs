@@ -5,31 +5,9 @@ using EHR.Modules;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
-using TMPro;
 using UnityEngine;
-using static EHR.Translator;
 
 namespace EHR;
-
-/*[HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.MakePublic))]
-internal static class MakePublicPatch
-{
-    public static bool Prefix()
-    {
-        if (ModUpdater.IsBroken || (ModUpdater.HasUpdate && ModUpdater.ForceUpdate) || !VersionChecker.IsSupported)
-        {
-            var message = string.Empty;
-            if (!VersionChecker.IsSupported) message = GetString("UnsupportedVersion");
-            if (ModUpdater.IsBroken) message = GetString("ModBrokenMessage");
-            if (ModUpdater.HasUpdate) message = GetString("CanNotJoinPublicRoomNoLatest");
-            Logger.Info(message, "MakePublicPatch");
-            Logger.SendInGame(message, Color.red);
-            return false;
-        }
-
-        return true;
-    }
-}*/
 
 [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.StartRpcImmediately))]
 static class StartRpcImmediatelyPatch
@@ -38,32 +16,6 @@ static class StartRpcImmediatelyPatch
     {
         if (callId is 21 or 44 or 45 or 104) return;
         Logger.Info($"Starting RPC: {callId} ({RPC.GetRpcName(callId)}) as {Main.CachedAllPlayerControls().Find(x => x.NetId == targetNetId)?.GetRealName() ?? targetNetId.ToString()} with SendOption {option} to {Utils.GetClientById(targetClientId)?.Character?.GetRealName() ?? targetClientId.ToString()}", "StartRpcImmediately");
-    }
-}
-
-[HarmonyPatch(typeof(MMOnlineManager), nameof(MMOnlineManager.Start))]
-// ReSharper disable once InconsistentNaming
-internal static class MMOnlineManagerStartPatch
-{
-    public static void Postfix()
-    {
-        if (!(ModUpdater.HasUpdate && ModUpdater.ForceUpdate || ModUpdater.IsBroken)) return;
-
-        GameObject obj = GameObject.Find("FindGameButton");
-
-        if (obj)
-        {
-            obj.SetActive(false);
-            TextMeshPro textObj = Object.Instantiate(obj.transform.Find("Text_TMP").GetComponent<TextMeshPro>());
-            textObj.transform.position = new(1f, -0.3f, 0);
-            textObj.name = "CanNotJoinPublic";
-
-            string message = ModUpdater.IsBroken
-                ? $"<size=2>{Utils.ColorString(Color.red, GetString("ModBrokenMessage"))}</size>"
-                : $"<size=2>{Utils.ColorString(Color.red, GetString("CanNotJoinPublicRoomNoLatest"))}</size>";
-
-            LateTask.New(() => { textObj.text = message; }, 0.01f, "CanNotJoinPublic");
-        }
     }
 }
 
@@ -106,8 +58,6 @@ internal static class RunLoginPatch
             canOnline = true;
         }
 
-        try { ModUpdater.ShowAvailableUpdate(); }
-        catch (Exception error) { Logger.Error(error.ToString(), "ModUpdater.ShowAvailableUpdate"); }
     }
 }
 
@@ -152,16 +102,6 @@ internal static class KickPlayerPatch
         if (ban) BanManager.AddBanPlayer(AmongUsClient.Instance.GetRecentClient(clientId));
 
         return true;
-    }
-}
-
-[HarmonyPatch(typeof(ResolutionManager), nameof(ResolutionManager.SetResolution))]
-internal static class SetResolutionManager
-{
-    public static void Postfix()
-    {
-        if (MainMenuManagerPatch.UpdateButton)
-            MainMenuManagerPatch.UpdateButton.transform.localPosition = MainMenuManagerPatch.Template.transform.localPosition + new Vector3(0.25f, 0.75f);
     }
 }
 

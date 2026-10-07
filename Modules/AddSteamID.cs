@@ -18,7 +18,7 @@ public static class AddSteamID
                 File.Create(FilePath).Close();
                 File.WriteAllText(FilePath, "945360");
 
-                ModUpdater.ShowPopup(Translator.GetString("AppIDAdded"), StringNames.Close, true);
+                PopupHelper.ShowPopup(Translator.GetString("AppIDAdded"), StringNames.Close, true);
             }
         }
         catch (Exception e) { Utils.ThrowException(e); }

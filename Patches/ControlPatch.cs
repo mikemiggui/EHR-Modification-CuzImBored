@@ -21,7 +21,6 @@ internal static class ControllerManagerUpdatePatch
 
     // Cache KeyCode[] because the code checks the key array every frame
     private static readonly KeyCode[] ReEnableGameplayKey = [KeyCode.LeftShift, KeyCode.LeftControl, KeyCode.X];
-    private static readonly KeyCode[] ResolutionManagerKey = [KeyCode.LeftAlt, KeyCode.Return];
     private static readonly KeyCode[] ChangeReslutionsKey = [KeyCode.F11, KeyCode.LeftAlt];
     private static readonly KeyCode[] LoadLangsKey = [KeyCode.F5, KeyCode.T];
     private static readonly KeyCode[] ExportCustomTranslationKey = [KeyCode.F5, KeyCode.X];
@@ -152,8 +151,6 @@ internal static class ControllerManagerUpdatePatch
             if (KeysDown(ReEnableGameplayKey))
                 ExileController.Instance?.ReEnableGameplay();
 
-            if (KeysDown(ResolutionManagerKey)) LateTask.New(SetResolutionManager.Postfix, 0.01f, "Fix Button Position");
-
             if (inGame && (GameStates.IsCanMove || isMeeting))
             {
                 // PS4/PS5: Touchpad
@@ -178,7 +175,6 @@ internal static class ControllerManagerUpdatePatch
                 if (ResolutionIndex >= Resolutions.Length) ResolutionIndex = 0;
 
                 ResolutionManager.SetResolution(Resolutions[ResolutionIndex].Item1, Resolutions[ResolutionIndex].Item2, false);
-                SetResolutionManager.Postfix();
             }
 
             if (KeysDown(LoadLangsKey))

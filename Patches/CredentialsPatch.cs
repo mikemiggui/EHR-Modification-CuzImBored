@@ -141,7 +141,7 @@ internal static class VersionShowerStartPatch
         string testBuildIndicator = Main.TestBuildNumber > 0 ? $" <#ff0000>TEST <#bb0000>{Main.TestBuildNumber}</color></color>" : string.Empty;
 #pragma warning restore CS0162 // Unreachable code detected
 
-        Main.CredentialsText = $"<color={Main.ModColor}>Endless Host Roles</color> v{Main.PluginDisplayVersion}{testBuildIndicator} <color=#a54aff>by</color> <color=#ffff00>Gurge44</color>";
+        Main.CredentialsText = $"<color={Main.ModColor}>{Main.PluginName}</color> v{Main.PluginDisplayVersion}{testBuildIndicator} <color=#a54aff>by</color> <color=#ffff00>Gurge44</color>";
 
         if (Main.IsAprilFools) Main.CredentialsText = "<color=#00bfff>Endless Madness</color> v11.45.14 <color=#a54aff>by</color> <color=#ffff00>No one</color>";
 
@@ -164,7 +164,7 @@ public static class UpdateFriendCodeUIPatch
     {
         var credentialsText = $"<color={Main.ModColor}>Gurge44</color> \u00a9 2026";
         credentialsText += "\t\t\t";
-        credentialsText += $"<color={Main.ModColor}>{Main.ModName}</color> - {Main.PluginVersion}";
+        credentialsText += $"<color={Main.ModColor}>{Main.PluginName}</color> - {Main.PluginVersion}";
 
         GameObject friendCode = GameObject.Find("FriendCode");
 

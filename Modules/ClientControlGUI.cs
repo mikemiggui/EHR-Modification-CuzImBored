@@ -624,10 +624,6 @@ public class ClientControlGUI : MonoBehaviour
             Logger.Info("Log dumped", "ClientControlGUI");
             Utils.DumpLog();
         });
-        Btn(ref y, Label("Fix Button Positions", "ALT + ENTER"), _sAction, () =>
-            LateTask.New(SetResolutionManager.Postfix, 0.01f, "Fix Button Position")
-        );
-
         if (inGame || inMeeting)
             Btn(ref y, Label("Fix Blackscreen", "SHIFT + CTRL + X"), _sAction, () =>
                 ExileController.Instance?.ReEnableGameplay()

@@ -8,6 +8,7 @@ namespace EHR.Roles;
 
 public class Bard : RoleBase
 {
+    private static readonly HttpClient JokeClient = new();
     public static int BardCreations;
     public static bool On;
     public override bool IsEnable => On;
@@ -37,7 +38,7 @@ public class Bard : RoleBase
             BardCreations++;
 
             string json;
-            HttpResponseMessage res = ModUpdater.HttpClient.GetAsync("https://official-joke-api.appspot.com/random_joke").Result;
+            HttpResponseMessage res = JokeClient.GetAsync("https://official-joke-api.appspot.com/random_joke").Result;
             Stream stream = res.Content.ReadAsStreamAsync().Result;
             try
             {

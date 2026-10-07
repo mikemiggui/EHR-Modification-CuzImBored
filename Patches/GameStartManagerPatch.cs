@@ -105,12 +105,6 @@ public static class GameStartManagerPatch
 
                 if (!AmongUsClient.Instance.AmHost) return;
 
-                if (ModUpdater.IsBroken || ModUpdater.HasUpdate && ModUpdater.ForceUpdate || !Main.AllowPublicRoom)
-                {
-                    // __instance.MakePublicButton.color = Palette.DisabledClear;
-                    // __instance.privatePublicText.color = Palette.DisabledClear;
-                }
-
                 if (Main.NormalOptions.KillCooldown == 0f) Main.NormalOptions.KillCooldown = Main.LastKillCooldown.Value;
 
 #if IL2CPP

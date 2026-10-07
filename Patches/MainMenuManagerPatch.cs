@@ -15,7 +15,6 @@ namespace EHR;
 public static class MainMenuManagerPatch
 {
     public static PassiveButton Template;
-    public static PassiveButton UpdateButton;
     private static PassiveButton GitHubButton;
     private static PassiveButton DiscordButton;
     private static PassiveButton WebsiteButton;
@@ -67,23 +66,6 @@ public static class MainMenuManagerPatch
     public static void Start_Prefix(MainMenuManager __instance)
     {
         if (!Template) Template = __instance.quitButton;
-
-        if (!Template) return;
-
-        if (!UpdateButton)
-        {
-            UpdateButton = CreateButton(
-                "updateButton",
-                new(4.2f, -1.3f, 1f),
-                new(255, 165, 0, byte.MaxValue),
-                new(255, 200, 0, byte.MaxValue),
-                () => ModUpdater.StartUpdate(ModUpdater.DownloadUrl),
-                Translator.GetString("updateButton"));
-
-            UpdateButton.transform.localScale = Vector3.one;
-        }
-
-        UpdateButton.gameObject.SetActive(ModUpdater.HasUpdate);
 
         Application.targetFrameRate = Main.UnlockFps.Value ? 120 : 60;
     }

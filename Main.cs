@@ -35,7 +35,7 @@ using Newtonsoft.Json;
 
 namespace EHR;
 
-[BepInPlugin(PluginGuid, "EHR-M-CIB", PluginVersion)]
+[BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 [BepInIncompatibility("jp.ykundesu.supernewroles")]
 [BepInIncompatibility("MalumMenu")]
 [BepInIncompatibility("com.crewmod.oficial")]
@@ -53,6 +53,7 @@ public class Main : BaseUnityPlugin
     private const string DebugKeyHash = "c0fd562955ba56af3ae20d7ec9e64c664f0facecef4b3e366e109306adeae29d";
     private const string DebugKeySalt = "59687b";
     public const string PluginGuid = "com.gurge44.endlesshostroles";
+    public const string PluginName = "EHR-M-CIB";
     public const string PluginVersion = "1.0.0";
     public const string PluginDisplayVersion = "1.0.0";
     public const int TestBuildNumber = 0; // 0 = Release

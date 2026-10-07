@@ -2588,7 +2588,7 @@ public static class Utils
             {
                 name = Options.GetSuffixMode() switch
                 {
-                    SuffixModes.EHR => $"{name} (<color={Main.ModColor}>EHR v{Main.PluginDisplayVersion}</color>)",
+                    SuffixModes.EHR => $"{name} (<color={Main.ModColor}>{Main.PluginName} v{Main.PluginDisplayVersion}</color>)",
                     SuffixModes.Streaming => $"{name} (<color={Main.ModColor}>{GetString("SuffixMode.Streaming")}</color>)",
                     SuffixModes.Recording => $"{name} (<color={Main.ModColor}>{GetString("SuffixMode.Recording")}</color>)",
                     SuffixModes.RoomHost => $"{name} (<color={Main.ModColor}>{GetString("SuffixMode.RoomHost")}</color>)",

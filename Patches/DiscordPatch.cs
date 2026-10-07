@@ -14,7 +14,7 @@ public static class DiscordRPC
     [HarmonyPatch(typeof(ActivityManager), nameof(ActivityManager.UpdateActivity))]
     public static void Prefix([HarmonyArgument(0)] Activity activity)
     {
-        var details = $"EHR v{Main.PluginDisplayVersion}";
+        var details = $"{Main.PluginName} v{Main.PluginDisplayVersion}";
         activity.Details = details;
         
         activity.Assets = new ActivityAssets
@@ -37,7 +37,7 @@ public static class DiscordRPC
                     if (Lobbycode != "" && Region != "") details = $"EHR - {Lobbycode} ({Region})";
                 }
                 else
-                    details = $"EHR v{Main.PluginDisplayVersion}";
+                    details = $"{Main.PluginName} v{Main.PluginDisplayVersion}";
 
                 activity.Details = details;
             }
@@ -46,7 +46,7 @@ public static class DiscordRPC
         {
             Logger.Error("Error in updating discord rpc", "DiscordPatch");
             Logger.Exception(ex, "DiscordPatch");
-            details = $"EHR v{Main.PluginDisplayVersion}";
+            details = $"{Main.PluginName} v{Main.PluginDisplayVersion}";
             activity.Details = details;
         }
     }
