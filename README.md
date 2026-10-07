@@ -43,8 +43,11 @@
 
 # Installation
 
-- Follow the manual guide on our website: [EHR Wiki](https://ehr-wiki.gurge44.eu/en/guides/installation/)
-- Or watch the tutorial by AnonWorks: [YouTube](https://youtu.be/AOLqWCbbrHM?si=nRRsNgz5-Z8XvFrs)
+-Download the DLL in the releases page
+-Download Gurge44's release containing BepInEx and EHR
+-Extract Gurge44's release
+-In the extracted folder, go to BepInEx\Plugins and replace EHR.dll with the EHR.dll from this page
+-In the root of the extracted folder (same place where BepInEx is located), place all files and folders from your Among Us copy there or vice-versa
 
 <br>
 
