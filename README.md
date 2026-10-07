@@ -24,6 +24,11 @@
 
 ---
 
+### Endless Host Roles Modification i made while bored
+**It adds a single hide and seek role and a new gamemode!**
+
+---
+
 ### Regarding this mod
 
 <div align="left">
@@ -191,7 +196,7 @@ You can also report bugs and suggest features in the #bug-reports and #suggestio
 | Shiftguard        | Witch           | Vortex            |               | Undead         |
 | Snitch            | Yin Yanger      | Vulture           |               | Underdog       |
 | Socialite         | Zombie          | Wraith            |               | Unlucky        |
-| Soothsayer        |                 | Werewolf          |               | Urgent         |
+| Soothsayer        | Sharp           | Werewolf          |               | Urgent         |
 | Spiritualist      |                 | Weapon Master     |               | Venom          |
 | Speedrunner       |                 | Weatherman        |               | Warden         |
 | Speed Booster     |                 | Workaholic        |               | Watcher        |
@@ -293,7 +298,7 @@ Click this badge to view our translation project:
 | /dis<br>/disconnect                            | Get rid of all players in the specified team                                                  | &#x1F538; **team** – The team to get rid of (imp/crew)<br>                                                                                                                                                                                                                                                                   | :yellow_circle: Host                      | :white_large_square: In Game            | :x:                      |
 | /r                                             | View the list of roles or the description of a specific role                                  | &#x1F539; **role** – The role to view (leave blank to view all roles)<br>                                                                                                                                                                                                                                                    | :purple_circle: Everyone                  | :purple_square: Always                  | :x:                      |
 | /up                                            | [DEPRECATED] Use /setrole or /setaddon instead                                                | &#x1F538; **role** – The role to set<br>                                                                                                                                                                                                                                                                                     | :yellow_circle: Host                      | :green_square: In Lobby                 | :x:                      |
-| /setrole<br>/setaddon                          | Set a player's role/add-on for the next game                                                  | &#x1F538; **id** – The player's ID whose role you want to set<br>&#x1F538; **role** – The role to set<br>                                                                                                                                                                                                                    | :yellow_circle: Host                      | :green_square: In Lobby                 | :x:                      |
+| /setrole<br>/setaddon                          | Set any player's role/add-on for the next game                                                | &#x1F538; **id** – The player's ID whose role you want to set<br>&#x1F538; **role** – The role to set<br>                                                                                                                                                                                                                    | :yellow_circle: Host                      | :green_square: In Lobby                 | :x:                      |
 | /h<br>/help                                    | View the list of commands                                                                     | –                                                                                                                                                                                                                                                                                                                            | :purple_circle: Everyone                  | :purple_square: Always                  | :x:                      |
 | /gamestate<br>/gstate<br>/gs<br>/kcount<br>/kc | View the number of remaining impostors and neutral killers                                    | –                                                                                                                                                                                                                                                                                                                            | :purple_circle: Everyone                  | :white_large_square: In Game            | :x:                      |
 | /addmod                                        | Makes the specified player a moderator                                                        | &#x1F538; **id** – The player's ID to make a moderator<br>                                                                                                                                                                                                                                                                   | :yellow_circle: Host                      | :purple_square: Always                  | :x:                      |
