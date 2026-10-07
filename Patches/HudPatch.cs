@@ -437,9 +437,13 @@ internal static class HudManagerPatch
                             button = __instance.ImpostorVentButton;
                         else if (role.IsCrewmate() && role.IsDesyncRole() && !usesPetInsteadOfKill || role is CustomRoles.Dreamweaver or CustomRoles.Enchanter or CustomRoles.VoodooMaster or CustomRoles.Blackmailer or CustomRoles.Cantankerous or CustomRoles.Consort or CustomRoles.Consigliere or CustomRoles.Framer or CustomRoles.Gangster or CustomRoles.Kamikaze or CustomRoles.Auditor or CustomRoles.Backstabber or CustomRoles.Cherokious or CustomRoles.Cultist or CustomRoles.Curser or CustomRoles.Gaslighter or CustomRoles.Investor or CustomRoles.Jackal or CustomRoles.Infection or CustomRoles.Pursuer or CustomRoles.Spiritcaller or CustomRoles.Starspawn)
                             button = __instance.KillButton;
-                        else if (Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger() || player.GetRoleTypes() is RoleTypes.Engineer or RoleTypes.Shapeshifter or RoleTypes.Phantom && !player.Is(CustomRoles.Nimble) && player.GetCustomRole() is not (CustomRoles.Mechanic or CustomRoles.Telecommunication))
+                        else if ((Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger() && role != CustomRoles.Combimpostor) ||
+                                 (player.GetRoleTypes() is RoleTypes.Engineer or RoleTypes.Shapeshifter or RoleTypes.Phantom) &&
+                                 !player.Is(CustomRoles.Nimble) &&
+                                 player.GetCustomRole() is not (CustomRoles.Mechanic or CustomRoles.Telecommunication) &&
+                                 !(role == CustomRoles.Combimpostor && Combimpostor.UsesPetSwitch))
                             button = __instance.AbilityButton;
-                        else if (Options.UsePets.GetBool() && role.PetActivatedAbility() || usesPetInsteadOfKill)
+                        else if ((Options.UsePets.GetBool() || role == CustomRoles.Combimpostor && Combimpostor.UsesPetSwitch) && role.PetActivatedAbility() || usesPetInsteadOfKill)
                             button = __instance.PetButton;
                         else
                             button = null;

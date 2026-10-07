@@ -403,6 +403,7 @@ internal static class CustomRolesHelper
 
                 // Vanilla roles (just in case)
                 CustomRoles.ImpostorEHR => CustomRoles.Impostor,
+                CustomRoles.Combimpostor => CustomRoles.Impostor,
                 CustomRoles.PhantomEHR => CustomRoles.Phantom,
                 CustomRoles.ShapeshifterEHR => CustomRoles.Shapeshifter,
                 CustomRoles.CrewmateEHR => CustomRoles.Crewmate,
@@ -557,6 +558,7 @@ internal static class CustomRolesHelper
                 CustomRoles.Sharpshooter => UsePets ? RoleTypes.Impostor : RoleTypes.Shapeshifter,
                 CustomRoles.Thanos => UsePets ? RoleTypes.Impostor : RoleTypes.Shapeshifter,
                 CustomRoles.Slenderman => RoleTypes.Impostor,
+                CustomRoles.Combimpostor => RoleTypes.Impostor,
                 CustomRoles.Amogus => RoleTypes.Impostor,
                 CustomRoles.Weatherman => RoleTypes.Impostor,
                 CustomRoles.Vortex => RoleTypes.Impostor,
@@ -751,6 +753,7 @@ internal static class CustomRolesHelper
             return role == CustomRoles.DoubleAgent && (!Options.IsLoaded || !Main.IntroDestroyed) || role is
                 CustomRoles.Impostor or
                 CustomRoles.ImpostorEHR or
+                CustomRoles.Combimpostor or
                 CustomRoles.Phantom or
                 CustomRoles.PhantomEHR or
                 CustomRoles.Shapeshifter or
@@ -937,11 +940,12 @@ internal static class CustomRolesHelper
         {
             if (Options.CurrentGameMode == CustomGameMode.CaptureTheFlag) return true;
 
-            if (!Options.UsePets.GetBool()) return false;
+            if (role == CustomRoles.Combimpostor && !Combimpostor.UsesPetSwitch) return false;
+            if (!Options.UsePets.GetBool() && !(role == CustomRoles.Combimpostor && Combimpostor.UsesPetSwitch)) return false;
 
             if (role.UsesPetInsteadOfKill()) return true;
 
-            if (Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger()) return false;
+            if (Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger() && role != CustomRoles.Combimpostor) return false;
 
             Type type = role.GetRoleClass().GetType();
             return type.GetMethod("OnPet")?.DeclaringType == type;
@@ -1338,6 +1342,7 @@ internal static class CustomRolesHelper
                 CustomRoles.Warlock => RoleOptionType.Impostor_Concealing,
                 CustomRoles.AntiAdminer => RoleOptionType.Impostor_Miscellaneous,
                 CustomRoles.Changeling => RoleOptionType.Impostor_Miscellaneous,
+                CustomRoles.Combimpostor => RoleOptionType.Impostor_Miscellaneous,
                 CustomRoles.Consigliere => RoleOptionType.Impostor_Miscellaneous,
                 CustomRoles.CursedWolf => RoleOptionType.Impostor_Miscellaneous,
                 CustomRoles.EvilTracker => RoleOptionType.Impostor_Miscellaneous,
@@ -2159,4 +2164,3 @@ public enum CountTypes
 
     Coven
 }
-

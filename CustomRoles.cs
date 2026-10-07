@@ -525,6 +525,8 @@ public enum CustomRoles
     // ????
     Convict,
 
+    // Impostor
+    Combimpostor,
 
     // Sub-role after 500
     NotAssigned = 500,

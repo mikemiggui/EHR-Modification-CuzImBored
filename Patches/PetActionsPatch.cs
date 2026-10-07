@@ -23,7 +23,8 @@ internal static class LocalPetPatch
 
     public static bool Prefix(PlayerControl __instance)
     {
-        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette) return true;
+        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette &&
+            !Combimpostor.UsesPetSwitchFor(__instance)) return true;
         if (!(AmongUsClient.Instance.AmHost && AmongUsClient.Instance.AmClient)) return true;
         if (GameStates.IsLobby || !__instance.IsAlive()) return true;
         
@@ -44,7 +45,8 @@ internal static class LocalPetPatch
 
     public static void Postfix(PlayerControl __instance)
     {
-        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette) return;
+        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette &&
+            !Combimpostor.UsesPetSwitchFor(__instance)) return;
         if (!(AmongUsClient.Instance.AmHost && AmongUsClient.Instance.AmClient)) return;
 
         __instance.petting = false;
@@ -61,7 +63,8 @@ internal static class ExternalRpcPetPatch
     public static void Prefix(PlayerPhysics __instance, [HarmonyArgument(0)] byte callID)
     {
         if (GameStates.IsLobby ||
-            !Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette ||
+            !Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette &&
+            !Combimpostor.UsesPetSwitchFor(__instance.myPlayer) ||
             !AmongUsClient.Instance.AmHost ||
             (RpcCalls)callID != RpcCalls.Pet)
             return;
@@ -162,7 +165,7 @@ internal static class ExternalRpcPetPatch
 
         CustomRoles role = pc.GetCustomRole();
         
-        if (Options.CurrentGameMode == CustomGameMode.Standard && Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger() && !role.AlwaysUsesPhantomBase() && role != CustomRoles.Chemist) return;
+        if (Options.CurrentGameMode == CustomGameMode.Standard && Options.UsePhantomBasis.GetBool() && (!role.IsNK() || Options.UsePhantomBasisForNKs.GetBool()) && role.SimpleAbilityTrigger() && !role.AlwaysUsesPhantomBase() && role != CustomRoles.Chemist && role != CustomRoles.Combimpostor) return;
         
         bool alwaysPetRole = role is CustomRoles.Necromancer or CustomRoles.Deathknight or CustomRoles.Renegade or CustomRoles.Sidekick;
 
