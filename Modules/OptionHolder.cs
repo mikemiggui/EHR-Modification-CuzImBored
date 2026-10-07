@@ -41,6 +41,7 @@ public enum CustomGameMode
     Mingle = 0x10,
     Snowdown = 0x11,
     DoomTag = 0x12,
+    BountyRoulette = 0x13,
     All = int.MaxValue
 }
 
@@ -105,7 +106,8 @@ public static class Options
         "Deathrace",
         "Mingle",
         "Snowdown",
-        "DoomTag"
+        "DoomTag",
+        "BountyRoulette"
     ];
 
     private static Dictionary<CustomRoles, int> roleCounts;
@@ -946,6 +948,7 @@ public static class Options
         15 => CustomGameMode.Mingle,
         16 => CustomGameMode.Snowdown,
         17 => CustomGameMode.DoomTag,
+        18 => CustomGameMode.BountyRoulette,
         _ => CustomGameMode.Standard
     };
 
@@ -1859,6 +1862,8 @@ public static class Options
         SoloPVP.SetupCustomOption();
         // FFA
         FreeForAll.SetupCustomOption();
+        // Bounty Roulette
+        BountyRoulette.SetupCustomOption();
         // Move And Stop
         StopAndGo.SetupCustomOption();
         // Hot Potato
@@ -3434,6 +3439,8 @@ public static class Options
                         14 => CustomGameMode.Deathrace,
                         15 => CustomGameMode.Mingle,
                         16 => CustomGameMode.Snowdown,
+                        17 => CustomGameMode.DoomTag,
+                        18 => CustomGameMode.BountyRoulette,
                         _ => CustomGameMode.Standard
                     };
                     AutoGMRotationCompiled.AddRange(Enumerable.Repeat(gm, times));

@@ -207,6 +207,9 @@ public static class FixedUpdateCaller
                         case CustomGameMode.FFA:
                             FreeForAll.FixedUpdatePatch.Postfix();
                             goto default;
+                        case CustomGameMode.BountyRoulette:
+                            BountyRoulette.FixedUpdatePatch.Postfix();
+                            goto default;
                         case CustomGameMode.KingOfTheZones:
                             KingOfTheZones.FixedUpdatePatch.Postfix();
                             goto default;

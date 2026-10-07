@@ -225,6 +225,9 @@ internal static class CheckMurderPatch
                 case CustomGameMode.FFA:
                     FreeForAll.OnPlayerAttack(killer, target);
                     return false;
+                case CustomGameMode.BountyRoulette:
+                    BountyRoulette.OnPlayerAttack(killer, target);
+                    return false;
                 case CustomGameMode.HotPotato:
                     (byte holderID, byte lastHolderID) = HotPotato.GetState();
                     if (HotPotato.CanPassViaKillButton && holderID == killer.PlayerId && (lastHolderID != target.PlayerId || Main.AllAlivePlayerControlsCount <= 2))
@@ -2448,6 +2451,9 @@ internal static class GameDataCompleteTaskPatch
 #endif
                 Benefactor.OnTaskComplete(pc, task);
             }
+
+            if (Options.CurrentGameMode == CustomGameMode.BountyRoulette)
+                BountyRoulette.OnTaskCompleted(pc);
 
             Logger.Info($"TaskComplete: {pc.GetNameWithRole()}", "CompleteTask");
         }

@@ -327,6 +327,7 @@ internal static class HudManagerPatch
                         //CustomGameMode.RoomRush => RRTimeTester.HUDText,
                         CustomGameMode.SoloPVP => SoloPVP.GetHudText(),
                         CustomGameMode.FFA => FreeForAll.GetHudText(),
+                        CustomGameMode.BountyRoulette => BountyRoulette.GetHudText(player.PlayerId),
                         CustomGameMode.StopAndGo => StopAndGo.GetHudText(),
                         CustomGameMode.HotPotato => HotPotato.GetSuffixText(player.PlayerId, true),
                         CustomGameMode.HideAndSeek => CustomHnS.GetSuffixText(player, player, true),
@@ -1344,6 +1345,32 @@ internal static class TaskPanelBehaviourPatch
                             .Append(" -")
                             .Append(string.Format(GetString("KillCount"), FreeForAll.KillCount.GetValueOrDefault(pcId, 0)));
                     }
+                    FinalTextBuilder.Append("</size>");
+                    break;
+                }
+            case CustomGameMode.BountyRoulette:
+                {
+                    FinalTextBuilder.Append("<size=80%>");
+
+                    SortedPlayers.Clear();
+                    foreach (var key in playerStates.Keys)
+                        SortedPlayers.Add(key);
+
+                    if (SortedPlayers.Count >= 2)
+                        SortedPlayers.Sort((a, b) => BountyRoulette.GetRankFromScore(a)
+                            .CompareTo(BountyRoulette.GetRankFromScore(b)));
+
+                    for (int sPId = 0; sPId < SortedPlayers.Count; sPId++)
+                    {
+                        byte playerId = SortedPlayers[sPId];
+                        FinalTextBuilder.Append("\r\n")
+                            .Append(BountyRoulette.GetRankFromScore(playerId))
+                            .Append(". ")
+                            .Append(playerId.ColoredPlayerName())
+                            .Append(" - ")
+                            .Append(string.Format(GetString("BountyRoulette.HudScore"), BountyRoulette.Scores.GetValueOrDefault(playerId, 0f)));
+                    }
+
                     FinalTextBuilder.Append("</size>");
                     break;
                 }

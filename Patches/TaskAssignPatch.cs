@@ -143,7 +143,7 @@ internal static class RpcSetTasksPatch
 #endif
     {
         // Android host somehow doesn't assign tasks in some game modes, so we skip the patch
-        bool notTaskingGM = Options.CurrentGameMode is not (CustomGameMode.Standard or CustomGameMode.HideAndSeek or CustomGameMode.Speedrun or CustomGameMode.StopAndGo);
+        bool notTaskingGM = Options.CurrentGameMode is not (CustomGameMode.Standard or CustomGameMode.HideAndSeek or CustomGameMode.Speedrun or CustomGameMode.StopAndGo or CustomGameMode.BountyRoulette);
         if (OperatingSystem.IsAndroid() && notTaskingGM) return;
 
         // Null measures

@@ -317,6 +317,7 @@ internal static class ChangeRoleSettings
             {
                 SoloPVP.Init();
                 FreeForAll.Init();
+                BountyRoulette.Init();
                 StopAndGo.Init();
                 HotPotato.Init();
                 CustomHnS.Init();
@@ -981,6 +982,9 @@ internal static class StartGameHostPatch
                     break;
                 case CustomGameMode.FFA:
                     GameEndChecker.SetPredicateToFFA();
+                    break;
+                case CustomGameMode.BountyRoulette:
+                    GameEndChecker.SetPredicateToBountyRoulette();
                     break;
                 case CustomGameMode.StopAndGo:
                     GameEndChecker.SetPredicateToStopAndGo();

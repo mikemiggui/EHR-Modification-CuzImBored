@@ -587,6 +587,7 @@ internal static class ShipStatusBeginPatch
 
             GameData.Instance.RecomputeTaskCounts();
             TaskState.InitialTotalTasks = GameData.Instance.TotalTasks;
+            BountyRoulette.ActivateInitialKillModes();
         }
     }
 }

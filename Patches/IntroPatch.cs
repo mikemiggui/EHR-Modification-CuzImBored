@@ -199,6 +199,16 @@ internal static class SetUpRoleTextPatch
                 __instance.RoleBlurbText.text = GetString("KillerInfo");
                 break;
             }
+            case CustomGameMode.BountyRoulette:
+            {
+                Color color = ColorUtility.TryParseHtmlString("#ffab1b", out Color c) ? c : new(255, 255, 255, 255);
+                __instance.YouAreText.transform.gameObject.SetActive(false);
+                __instance.RoleText.text = GetString("BountyRoulette");
+                __instance.RoleText.color = color;
+                __instance.RoleBlurbText.color = color;
+                __instance.RoleBlurbText.text = GetString("BountyRouletteInfo");
+                break;
+            }
             case CustomGameMode.StopAndGo:
             {
                 Color color = ColorUtility.TryParseHtmlString("#00ffa5", out Color c) ? c : new(255, 255, 255, 255);
@@ -935,6 +945,15 @@ internal static class BeginCrewmatePatch
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Shapeshifter);
                 __instance.ImpostorText.gameObject.SetActive(true);
                 __instance.ImpostorText.text = GetString("KillerInfo");
+                break;
+            }
+            case CustomGameMode.BountyRoulette:
+            {
+                __instance.TeamTitle.text = GetString("BountyRoulette");
+                __instance.TeamTitle.color = __instance.BackgroundBar.material.color = new Color32(255, 171, 27, byte.MaxValue);
+                PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Shapeshifter);
+                __instance.ImpostorText.gameObject.SetActive(true);
+                __instance.ImpostorText.text = GetString("BountyRouletteInfo");
                 break;
             }
             case CustomGameMode.StopAndGo:

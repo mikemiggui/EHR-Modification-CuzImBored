@@ -528,6 +528,11 @@ internal static class GameEndChecker
         Predicate = new FFAGameEndPredicate();
     }
 
+    public static void SetPredicateToBountyRoulette()
+    {
+        Predicate = new BountyRouletteGameEndPredicate();
+    }
+
     public static void SetPredicateToStopAndGo()
     {
         Predicate = new StopAndGoGameEndPredicate();
@@ -1071,6 +1076,32 @@ internal static class GameEndChecker
                 default:
                     return false;
             }
+        }
+    }
+
+    private class BountyRouletteGameEndPredicate : GameEndPredicate
+    {
+        public override bool CheckForGameEnd(out GameOverReason reason)
+        {
+            reason = GameOverReason.ImpostorsByKill;
+            if (WinnerIds.Count > 0 || Main.CachedAlivePlayerControls().Count > 1) return false;
+
+            var connectedScores = BountyRoulette.Scores
+                .Where(score => GetPlayerById(score.Key) is { Data.Disconnected: false })
+                .ToArray();
+            if (connectedScores.Length == 0)
+            {
+                CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Draw);
+                return true;
+            }
+
+            float highestScore = connectedScores.Max(score => score.Value);
+            WinnerIds = connectedScores
+                .Where(score => score.Value == highestScore)
+                .Select(score => score.Key)
+                .ToHashSet();
+            Main.DoBlockNameChange = true;
+            return true;
         }
     }
 

@@ -76,7 +76,8 @@ internal static class CustomRolesHelper
                 CustomRoles.Racer or
                 CustomRoles.MinglePlayer or
                 CustomRoles.SnowdownPlayer or
-                CustomRoles.Tagger;
+                CustomRoles.Tagger or
+                CustomRoles.Sharp;
         }
 
         public RoleBase GetRoleClass()
@@ -417,6 +418,7 @@ internal static class CustomRolesHelper
                 // Hide And Seek
                 CustomRoles.Hider => CustomRoles.Crewmate,
                 CustomRoles.Seeker => CustomRoles.Impostor,
+                CustomRoles.Sharp => CustomRoles.Impostor,
                 CustomRoles.Fox => Fox.HasVitals.GetBool() ? CustomRoles.Scientist : CustomRoles.Crewmate,
                 CustomRoles.Troll => CustomRoles.Crewmate,
                 CustomRoles.Jumper => CustomRoles.Engineer,
@@ -2157,6 +2159,4 @@ public enum CountTypes
 
     Coven
 }
-
-
 

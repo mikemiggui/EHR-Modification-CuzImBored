@@ -25,6 +25,7 @@ internal static class EndGamePatch
     public static void Postfix()
     {
         GameStates.InGame = false;
+        BountyRoulette.RestoreTaskSettings();
 
         Logger.Info("-----------Game over-----------", "Phase");
 
@@ -251,6 +252,14 @@ internal static class SetEverythingUpPatch
                     winnerText.color = Main.PlayerColors[winnerId];
                     goto EndOfText;
                 }
+                case CustomGameMode.BountyRoulette:
+                {
+                    Color color = new(255, 171, 27, 255);
+                    __instance.BackgroundBar.material.color = color;
+                    winnerText.text = CustomWinnerHolder.WinnerIds.Select(x => x.ColoredPlayerName()).Join() + GetString("Win");
+                    winnerText.color = color;
+                    goto EndOfText;
+                }
                 case CustomGameMode.StopAndGo:
                 {
                     byte winnerId = CustomWinnerHolder.WinnerIds.FirstOrDefault();
@@ -457,7 +466,6 @@ internal static class SetEverythingUpPatch
                 winnerText.color = Color.white;
                 break;
         }
-
         foreach (AdditionalWinners additionalWinners in CustomWinnerHolder.AdditionalWinnerTeams)
         {
             var addWinnerRole = (CustomRoles)additionalWinners;
@@ -529,6 +537,17 @@ internal static class SetEverythingUpPatch
                 {
                     List<(int, byte)> list = [];
                     list.AddRange(cloneRoles.Select(id => (FreeForAll.GetRankFromScore(id), id)));
+
+                    list.Sort();
+                    foreach ((int, byte) id in list.Where(x => EndGamePatch.SummaryText.ContainsKey(x.Item2)))
+                        sb.Append('\n').Append(EndGamePatch.SummaryText[id.Item2]);
+
+                    break;
+                }
+                case CustomGameMode.BountyRoulette:
+                {
+                    List<(int, byte)> list = [];
+                    list.AddRange(cloneRoles.Select(id => (BountyRoulette.GetRankFromScore(id), id)));
 
                     list.Sort();
                     foreach ((int, byte) id in list.Where(x => EndGamePatch.SummaryText.ContainsKey(x.Item2)))

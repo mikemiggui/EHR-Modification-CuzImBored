@@ -182,7 +182,8 @@ public enum CustomRPC
     TMGSync,
     BedWarsSync,
     DeathraceSync,
-    DoomTagSync
+    DoomTagSync,
+    BountyRouletteSync
 
     // The total number of RPCs must not exceed 255
     // Because HandleRpc accepts Rpc in byte (max 255) system, and it will be impossible to use int
@@ -1208,6 +1209,11 @@ internal static class RPCHandlerPatch
                             break;
                     }
                     
+                    break;
+                }
+                case CustomRPC.BountyRouletteSync:
+                {
+                    BountyRoulette.ReceiveRPC(reader);
                     break;
                 }
                 case CustomRPC.QuizSync:

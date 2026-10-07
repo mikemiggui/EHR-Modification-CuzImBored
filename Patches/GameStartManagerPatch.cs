@@ -602,6 +602,9 @@ public static class GameStartRandomMap
         if (Options.OverrideSpeedForEachMap.GetBool() && Options.MapSpeeds.TryGetValue(Main.CurrentMap, out var option))
             Main.NormalOptions.PlayerSpeedMod = option.GetFloat();
 
+        if (AmongUsClient.Instance.AmHost)
+            BountyRoulette.ApplyTaskSettings();
+
         if (__instance.startState != GameStartManager.StartingStates.Countdown)
         {
             Options.DefaultKillCooldown = Main.NormalOptions.KillCooldown;
@@ -658,6 +661,8 @@ internal static class ResetStartStatePatch
     public static void Prefix(GameStartManager __instance)
     {
         SoundManager.Instance.StopSound(__instance.gameStartSound);
+        if (!GameStates.IsInGame)
+            BountyRoulette.RestoreTaskSettings();
         GameStartManagerPatch.UpdateSpriteStartButton = true;
     }
 }

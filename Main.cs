@@ -163,7 +163,8 @@ public class Main : BaseUnityPlugin
         [CustomGameMode.CaptureTheFlag] = [],
         [CustomGameMode.NaturalDisasters] = [],
         [CustomGameMode.Snowdown] = [],
-        [CustomGameMode.DoomTag] = []
+        [CustomGameMode.DoomTag] = [],
+        [CustomGameMode.BountyRoulette] = []
     };
 
     public static Dictionary<CustomGameMode, Color> GameModeColors = [];
@@ -676,6 +677,7 @@ public class Main : BaseUnityPlugin
                 { CustomRoles.Provocateur, "#74ba43" },
                 { CustomRoles.Sunnyboy, "#ff9902" },
                 { CustomRoles.Poisoner, "#e70052" },
+                { CustomRoles.Sharp, "#ff1919" },
                 { CustomRoles.Follower, "#ff9409" },
                 { CustomRoles.Romantic, "#FF1493" },
                 { CustomRoles.VengefulRomantic, "#ba2749" },
@@ -1010,7 +1012,8 @@ public class Main : BaseUnityPlugin
             [CustomGameMode.Deathrace] = Utils.GetRoleColor(CustomRoles.Racer),
             [CustomGameMode.Mingle] = Utils.GetRoleColor(CustomRoles.MinglePlayer),
             [CustomGameMode.Snowdown] = Utils.GetRoleColor(CustomRoles.SnowdownPlayer),
-            [CustomGameMode.DoomTag] = Utils.GetRoleColor(CustomRoles.Tagger)
+            [CustomGameMode.DoomTag] = Utils.GetRoleColor(CustomRoles.Tagger),
+            [CustomGameMode.BountyRoulette] = ColorUtility.TryParseHtmlString("#ffab1b", out c) ? c : Color.white
         };
 
 #if IL2CPP

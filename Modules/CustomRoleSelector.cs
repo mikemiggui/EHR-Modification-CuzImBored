@@ -29,6 +29,7 @@ internal static class CustomRoleSelector
     {
         { CustomGameMode.SoloPVP, CustomRoles.Challenger },
         { CustomGameMode.FFA, CustomRoles.Killer },
+        { CustomGameMode.BountyRoulette, CustomRoles.Killer },
         { CustomGameMode.StopAndGo, CustomRoles.Tasker },
         { CustomGameMode.HotPotato, CustomRoles.Potato },
         { CustomGameMode.Speedrun, CustomRoles.Runner },

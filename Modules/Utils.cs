@@ -634,6 +634,12 @@ public static class Utils
             roleText = $"{GetString("Prefix.Egoist")} {roleText}";
         }
 
+        if (Options.CurrentGameMode == CustomGameMode.BountyRoulette)
+        {
+            roleText = GetString("BountyRouletteRole");
+            roleColor = new Color32(255, 171, 27, byte.MaxValue);
+        }
+
         return (roleText, roleColor);
     }
 
@@ -845,6 +851,8 @@ public static class Utils
 
         switch (Options.CurrentGameMode)
         {
+            case CustomGameMode.BountyRoulette:
+                return !p.IsDead;
             case CustomGameMode.SoloPVP:
             case CustomGameMode.FFA:
             case CustomGameMode.HotPotato:
@@ -2542,6 +2550,7 @@ public static class Utils
                 {
                     CustomGameMode.SoloPVP => $"<color=#f55252>{modeText}</color>\r\n{name}",
                     CustomGameMode.FFA => $"<color=#00ffff>{modeText}</color>\r\n{name}",
+                    CustomGameMode.BountyRoulette => $"<color=#ffab1b>{modeText}</color>\r\n{name}",
                     CustomGameMode.StopAndGo => $"<color=#00ffa5>{modeText}</color>\r\n{name}",
                     CustomGameMode.HotPotato => $"<color=#e8cd46>{modeText}</color>\r\n{name}",
                     CustomGameMode.HideAndSeek => $"<color=#345eeb>{modeText}</color>\r\n{name}",
@@ -3089,7 +3098,7 @@ public static class Utils
                 if (Options.CurrentGameMode == CustomGameMode.FFA && FreeForAll.FFATeamMode.GetBool() || Options.CurrentGameMode == CustomGameMode.HotPotato)
                     seerRealName = seerRealName.ApplyNameColorData(seer, seer, forMeeting);
 
-                if (!forMeeting && MeetingStates.FirstMeeting && Options.ChangeNameToRoleInfo.GetBool() && Options.CurrentGameMode is not CustomGameMode.FFA and not CustomGameMode.StopAndGo and not CustomGameMode.HotPotato and not CustomGameMode.Speedrun and not CustomGameMode.CaptureTheFlag and not CustomGameMode.NaturalDisasters and not CustomGameMode.RoomRush and not CustomGameMode.KingOfTheZones and not CustomGameMode.Quiz and not CustomGameMode.TheMindGame and not CustomGameMode.BedWars and not CustomGameMode.Deathrace and not CustomGameMode.Mingle and not CustomGameMode.Snowdown)
+                if (!forMeeting && MeetingStates.FirstMeeting && Options.ChangeNameToRoleInfo.GetBool() && Options.CurrentGameMode is not CustomGameMode.FFA and not CustomGameMode.BountyRoulette and not CustomGameMode.StopAndGo and not CustomGameMode.HotPotato and not CustomGameMode.Speedrun and not CustomGameMode.CaptureTheFlag and not CustomGameMode.NaturalDisasters and not CustomGameMode.RoomRush and not CustomGameMode.KingOfTheZones and not CustomGameMode.Quiz and not CustomGameMode.TheMindGame and not CustomGameMode.BedWars and not CustomGameMode.Deathrace and not CustomGameMode.Mingle and not CustomGameMode.Snowdown)
                 {
                     CustomTeamManager.CustomTeam team = CustomTeamManager.GetCustomTeam(seer.PlayerId);
 
@@ -3190,6 +3199,9 @@ public static class Utils
                         selfName = $"<size={fontSize}>{selfTaskText}</size>\r\n{selfName}";
                         break;
                     case CustomGameMode.FFA:
+                    case CustomGameMode.BountyRoulette:
+                        if (Options.CurrentGameMode == CustomGameMode.BountyRoulette && !seer.IsModdedClient())
+                            selfName = $"{BountyRoulette.GetHudText(seer.PlayerId)}\r\n{selfName}";
                         selfName = $"<size={fontSize}>{selfTaskText}</size>\r\n{selfName}";
                         break;
                     default:
@@ -3625,7 +3637,7 @@ public static class Utils
 
         switch (Options.CurrentGameMode)
         {
-            case CustomGameMode.FFA or CustomGameMode.StopAndGo or CustomGameMode.HotPotato or CustomGameMode.Speedrun:
+            case CustomGameMode.FFA or CustomGameMode.BountyRoulette or CustomGameMode.StopAndGo or CustomGameMode.HotPotato or CustomGameMode.Speedrun:
             case CustomGameMode.HideAndSeek when CustomHnS.IsRoleTextEnabled(seer, target):
                 return true;
             default:
@@ -3645,6 +3657,7 @@ public static class Utils
         {
             case CustomGameMode.FFA:
             case CustomGameMode.SoloPVP:
+            case CustomGameMode.BountyRoulette:
             case CustomGameMode.StopAndGo:
             case CustomGameMode.HotPotato:
             case CustomGameMode.Speedrun:
@@ -4632,6 +4645,9 @@ public static class Utils
                     break;
                 case CustomGameMode.FFA:
                     summary = $"{ColorString(Main.PlayerColors[id], name)} {GetKillCountText(id, true)}";
+                    break;
+                case CustomGameMode.BountyRoulette:
+                    summary = $"{ColorString(Main.PlayerColors[id], name)} - {string.Format(GetString("BountyRoulette.HudScore"), BountyRoulette.Scores.GetValueOrDefault(id, 0f))}";
                     break;
                 case CustomGameMode.Speedrun:
                 case CustomGameMode.StopAndGo:

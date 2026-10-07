@@ -2760,12 +2760,6 @@ internal static class ChatCommands
             return;
         }
 
-        if (resultId != 0 && !player.FriendCode.GetDevUser().up && !GameStates.IsLocalGame)
-        {
-            Utils.SendMessage(GetString("Message.NoPermissionSetRoleOthers"), player.PlayerId);
-            return;
-        }
-
         PlayerControl targetPc = Utils.GetPlayerById(resultId);
         if (targetPc == null) return;
 

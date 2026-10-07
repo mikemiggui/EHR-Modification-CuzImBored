@@ -1399,6 +1399,8 @@ internal static class ExtendedPlayerControl
                     return HotPotato.CanPassViaKillButton && HotPotato.GetState().HolderID == player.PlayerId;
                 case CustomGameMode.Quiz:
                     return Quiz.AllowKills;
+                case CustomGameMode.BountyRoulette:
+                    return BountyRoulette.IsKillMode(player.PlayerId);
                 case CustomGameMode.KingOfTheZones:
                 case CustomGameMode.CaptureTheFlag:
                 case CustomGameMode.BedWars:

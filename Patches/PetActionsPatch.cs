@@ -23,7 +23,7 @@ internal static class LocalPetPatch
 
     public static bool Prefix(PlayerControl __instance)
     {
-        if (!Options.UsePets.GetBool()) return true;
+        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette) return true;
         if (!(AmongUsClient.Instance.AmHost && AmongUsClient.Instance.AmClient)) return true;
         if (GameStates.IsLobby || !__instance.IsAlive()) return true;
         
@@ -37,12 +37,14 @@ internal static class LocalPetPatch
 
         ExternalRpcPetPatch.Prefix(__instance.MyPhysics, (byte)RpcCalls.Pet);
 
+        if (Options.CurrentGameMode == CustomGameMode.BountyRoulette) return false;
+
         return !Main.CancelPetAnimation.Value || !__instance.GetCustomRole().PetActivatedAbility();
     }
 
     public static void Postfix(PlayerControl __instance)
     {
-        if (!Options.UsePets.GetBool()) return;
+        if (!Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette) return;
         if (!(AmongUsClient.Instance.AmHost && AmongUsClient.Instance.AmClient)) return;
 
         __instance.petting = false;
@@ -58,7 +60,11 @@ internal static class ExternalRpcPetPatch
 
     public static void Prefix(PlayerPhysics __instance, [HarmonyArgument(0)] byte callID)
     {
-        if (GameStates.IsLobby || !Options.UsePets.GetBool() || !AmongUsClient.Instance.AmHost || (RpcCalls)callID != RpcCalls.Pet) return;
+        if (GameStates.IsLobby ||
+            !Options.UsePets.GetBool() && Options.CurrentGameMode != CustomGameMode.BountyRoulette ||
+            !AmongUsClient.Instance.AmHost ||
+            (RpcCalls)callID != RpcCalls.Pet)
+            return;
 
         PlayerControl pc = __instance.myPlayer;
         PlayerPhysics physics = __instance;
@@ -115,6 +121,12 @@ internal static class ExternalRpcPetPatch
             IntroCutsceneDestroyPatch.PreventKill
             )
             return;
+
+        if (Options.CurrentGameMode == CustomGameMode.BountyRoulette)
+        {
+            BountyRoulette.ToggleKillMode(pc);
+            return;
+        }
 
         if (Options.CurrentGameMode == CustomGameMode.CaptureTheFlag)
         {
